@@ -19,7 +19,7 @@ RUN apt-get update -q && \
     rm -rf /var/lib/apt/lists/*
 ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
 RUN locale-gen en_US.UTF-8
-RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources.list.d/ros-latest.list'
+RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list'
 RUN curl -k https://raw.githubusercontent.com/ros/rosdistro/master/ros.key | sudo apt-key add -
 RUN apt-get update -q && \
     apt-get install -y --no-install-recommends ros-kinetic-desktop-full python-rosdep &&\

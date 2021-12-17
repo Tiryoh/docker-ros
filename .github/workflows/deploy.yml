@@ -22,10 +22,9 @@ jobs:
     strategy:
       matrix:
         ros-distro:
-          - crystal
-          - dashing
-          - eloquent
-          - foxy
+          - kinetic
+          - melodic
+          - noetic
 
     steps:
       - name: Checkout

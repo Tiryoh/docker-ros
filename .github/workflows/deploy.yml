@@ -12,7 +12,7 @@ on:
 
 env:
   DOCKER_USERNAME: tiryoh
-  DOCKER_IMAGENAME: ros2
+  DOCKER_IMAGENAME: ros
   GIT_CONFIG_USER: Tiryoh@GitHubActions
   GIT_CONFIG_EMAIL: tiryoh@gmail.com
 

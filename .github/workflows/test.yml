@@ -9,7 +9,7 @@ on:
 
 env:
   DOCKER_USERNAME: tiryoh
-  DOCKER_IMAGENAME: ros2
+  DOCKER_IMAGENAME: ros
 
 jobs:
   build:

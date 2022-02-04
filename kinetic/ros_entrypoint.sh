@@ -31,13 +31,13 @@ if [[ $(id -u) -eq 0 ]]; then
 		touch /home/${DEFAULT_USER}/.bash_aliases
 		echo "function catkin_make(){(cd ~/catkin_ws && command catkin_make \$@) && source ~/catkin_ws/devel/setup.bash;}" >> /home/${DEFAULT_USER}/.bash_aliases
 		mkdir -p /home/${DEFAULT_USER}/catkin_ws/src \
-		&& /bin/bash -c ". /opt/ros/melodic/setup.bash; catkin_init_workspace /home/${DEFAULT_USER}/catkin_ws/src" > /dev/null
-		echo 'source /opt/ros/melodic/setup.bash' >> /home/${DEFAULT_USER}/.bashrc
+		&& /bin/bash -c ". /opt/ros/kinetic/setup.bash; catkin_init_workspace /home/${DEFAULT_USER}/catkin_ws/src" > /dev/null
+		echo 'source /opt/ros/kinetic/setup.bash' >> /home/${DEFAULT_USER}/.bashrc
 	fi
 	if [[ "$BUILD_TOOL" == "catkin-tools" ]]; then
 		mkdir -p /home/${DEFAULT_USER}/catkin_ws/src \
-		&& /bin/bash -c "cd /home/${DEFAULT_USER}/catkin_ws;. /opt/ros/melodic/setup.bash; catkin init" > /dev/null
-		echo 'source /opt/ros/melodic/setup.bash' >> /home/${DEFAULT_USER}/.bashrc
+		&& /bin/bash -c "cd /home/${DEFAULT_USER}/catkin_ws;. /opt/ros/kinetic/setup.bash; catkin init" > /dev/null
+		echo 'source /opt/ros/kinetic/setup.bash' >> /home/${DEFAULT_USER}/.bashrc
 		echo 'source `catkin locate --shell-verbs`' >> /home/${DEFAULT_USER}/.bashrc
 	fi
 

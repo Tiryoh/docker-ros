@@ -24,6 +24,7 @@ RUN curl -k https://raw.githubusercontent.com/ros/rosdistro/master/ros.key | sud
 RUN apt-get update -q && \
     apt-get install -y --no-install-recommends ros-noetic-desktop-full python3-rosdep &&\
     apt-get install -y --no-install-recommends python3-rosinstall python3-rosinstall-generator python3-wstool python3-catkin-tools python3-osrf-pycommon python3-vcstool &&\
+    apt-get install -y --no-install-recommends ros-noetic-teleop-twist-keyboard &&\
     rm -rf /var/lib/apt/lists/*
 RUN rosdep init && rosdep update
 COPY ./ros_entrypoint.sh /

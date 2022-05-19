@@ -57,6 +57,14 @@ else # use existing user
 	DEFAULT_USER_GID="$(id -g)"
 fi
 
+if [ ! -e /home/${DEFAULT_USER}/.config/terminator/config ]; then
+	# Avoid org.freedesktop.DBus.Error.Spawn.ExecFailed
+	# https://forums.bunsenlabs.org/viewtopic.php?pid=59732#p59732
+	mkdir -p /home/${DEFAULT_USER}/.config/terminator
+	echo '[global_config]' | tee -a /home/${DEFAULT_USER}/.config/terminator/config > /dev/null
+	echo '    dbus = "False"' | tee -a /home/${DEFAULT_USER}/.config/terminator/config > /dev/null
+fi
+
 echo "Launched container with user: $DEFAULT_USER, uid: $DEFAULT_USER_UID, gid: $DEFAULT_USER_GID"
 
 if which "$1" > /dev/null 2>&1 ; then

@@ -2,7 +2,7 @@ name: Deploy
 on:
   push:
     branches:
-      - master
+      - main
     paths-ignore:
       - 'docs/**'
       - '**.md'
@@ -22,7 +22,6 @@ jobs:
     strategy:
       matrix:
         ros-distro:
-          - kinetic
           - melodic
           - noetic
 

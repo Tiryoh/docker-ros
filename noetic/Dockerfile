@@ -26,7 +26,15 @@ RUN apt-get update -q && \
     apt-get install -y --no-install-recommends python3-rosinstall python3-rosinstall-generator python3-wstool python3-catkin-tools python3-osrf-pycommon python3-vcstool &&\
     apt-get install -y --no-install-recommends ros-noetic-teleop-twist-keyboard &&\
     rm -rf /var/lib/apt/lists/*
-RUN rosdep init && rosdep update
+RUN rosdep init && rosdep update --include-eol-distros
+RUN echo -e "\n\
+echo 'Sourcing ROS 1 packages...'\n\
+source /opt/ros/\${ROS_DISTRO}/setup.bash\n\
+if [ -e \${HOME}/catkin_ws/devel/setup.bash ]; then\n\
+    source \${HOME}/catkin_ws/devel/setup.bash\n\
+fi\n\
+export PS1=\"(\$CONTAINER_NAME)\n\$PS1\"\n\
+" >> $HOME/.bashrc
 COPY ./ros_entrypoint.sh /
 ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["/bin/bash"]

@@ -2,17 +2,23 @@
 
 Dockerfiles of ROS to use with osrf/rocker
 
-## Usage
+## Usage (with osrf/rocker)
 
-Melodic (without NVIDIA GPU)
-
-```
-rocker --x11 --user --network=host --privileged --volume ~/catkin_ws -- tiryoh/ros:melodic
-```
-
-
-Melodic (with NVIDIA GPU)
+Noetic (without NVIDIA GPU)
 
 ```
-rocker --x11 --nvidia --user --network=host --privileged --volume ~/catkin_ws -- tiryoh/ros:melodic
+rocker --x11 --user --network=host --privileged --volume ~/catkin_ws -- tiryoh/ros:noetic
+```
+
+
+Noetic (with NVIDIA GPU)
+
+```
+rocker --x11 --nvidia --user --network=host --privileged --volume ~/catkin_ws -- tiryoh/ros:noetic
+```
+
+## Usage (without osrf/rocker)
+
+```
+ROS_DISTRO=noetic ./run.sh
 ```

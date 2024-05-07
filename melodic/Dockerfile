@@ -26,10 +26,6 @@ RUN apt-get update -q && \
     apt-get install -y --no-install-recommends python-rosinstall python-rosinstall-generator python-wstool python-catkin-tools python3-vcstool &&\
     apt-get install -y --no-install-recommends ros-melodic-teleop-twist-keyboard &&\
     rm -rf /var/lib/apt/lists/*
-RUN apt-get update -q && \
-    apt-get install -y --no-install-recommends python-pip && \
-    rm -rf /var/lib/apt/lists/* && \
-    pip install --no-cache importlib_metadata
 RUN rosdep init && rosdep update --include-eol-distros
 RUN echo -e "\n\
 echo 'Sourcing ROS 1 packages...'\n\

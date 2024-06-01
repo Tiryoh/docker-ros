@@ -26,7 +26,7 @@ RUN apt-get update -q && \
     rm /tmp/ros-noetic-jammy-install.sh && \
     rm -rf /var/lib/apt/lists/*
 RUN apt-get update -q && \
-    apt-get install -y --no-install-recommends ros-noetic-desktop-full python3-rosdep &&\
+    apt-get install -y --no-install-recommends ros-noetic-desktop-full python3-rosdep python3-pip &&\
     rm -rf /var/lib/apt/lists/*
 RUN pip install --no-cache rosinstall rosinstall-generator wstool catkin-tools osrf-pycommon vcstool
 RUN rosdep init && rosdep update --include-eol-distros

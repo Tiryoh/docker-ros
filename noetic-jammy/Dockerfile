@@ -1,0 +1,43 @@
+FROM ubuntu:jammy-20240427 AS builder
+RUN apt-get update
+RUN apt-get install -y curl
+RUN apt-get install -y --no-install-recommends gcc libc-dev
+RUN curl -o /usr/local/bin/su-exec.c https://raw.githubusercontent.com/ncopa/su-exec/master/su-exec.c
+RUN gcc -Wall /usr/local/bin/su-exec.c -o/usr/local/bin/su-exec
+RUN chown root:root /usr/local/bin/su-exec
+RUN chmod 0755 /usr/local/bin/su-exec
+
+FROM ubuntu:jammy-20240427
+LABEL maintainer="Daisuke Sato <tiryoh@gmail.com>"
+
+COPY --from=builder /usr/local/bin/su-exec /sbin/
+RUN apt-get update -q && \
+    apt-get upgrade -yq && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends keyboard-configuration language-pack-en && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends wget curl git build-essential ca-certificates tzdata tmux gnupg2 \
+        vim sudo lsb-release locales bash-completion zsh iproute2 iputils-ping net-tools dnsutils terminator && \
+    rm -rf /var/lib/apt/lists/*
+ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
+RUN locale-gen en_US.UTF-8
+# https://tech.groove-x.com/entry/noetic-on-jammy
+RUN apt-get update -q && \
+    curl -s https://packagecloud.io/install/repositories/groove-x/ros/script.deb.sh -o /tmp/ros-noetic-jammy-install.sh && \
+    bash /tmp/ros-noetic-jammy-install.sh && \
+    rm /tmp/ros-noetic-jammy-install.sh && \
+    rm -rf /var/lib/apt/lists/*
+RUN apt-get update -q && \
+    apt-get install -y --no-install-recommends ros-noetic-desktop-full python3-rosdep &&\
+    rm -rf /var/lib/apt/lists/*
+RUN pip install --no-cache rosinstall rosinstall-generator wstool catkin-tools osrf-pycommon vcstool
+RUN rosdep init && rosdep update --include-eol-distros
+RUN echo -e "\n\
+echo 'Sourcing ROS 1 packages...'\n\
+source /opt/ros/\${ROS_DISTRO}/setup.bash\n\
+if [ -e \${HOME}/catkin_ws/devel/setup.bash ]; then\n\
+    source \${HOME}/catkin_ws/devel/setup.bash\n\
+fi\n\
+export PS1=\"(\$CONTAINER_NAME)\n\$PS1\"\n\
+" >> $HOME/.bashrc
+COPY ./ros_entrypoint.sh /
+ENTRYPOINT ["/ros_entrypoint.sh"]
+CMD ["/bin/bash"]

@@ -19,6 +19,7 @@ jobs:
         ros-distro:
           - melodic
           - noetic
+          - noetic-jammy
 
     steps:
       - name: Free Up GitHub Actions Ubuntu Runner Disk Space

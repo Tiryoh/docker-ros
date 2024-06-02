@@ -25,6 +25,7 @@ jobs:
         ros-distro:
           - melodic
           - noetic
+          - noetic-jammy
 
     steps:
       - name: Checkout

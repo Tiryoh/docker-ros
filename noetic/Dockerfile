@@ -1,4 +1,4 @@
-FROM ubuntu:focal-20240918 AS builder
+FROM ubuntu:focal-20241011 AS builder
 RUN apt-get update
 RUN apt-get install -y curl
 RUN apt-get install -y --no-install-recommends gcc libc-dev
@@ -7,7 +7,7 @@ RUN gcc -Wall /usr/local/bin/su-exec.c -o/usr/local/bin/su-exec
 RUN chown root:root /usr/local/bin/su-exec
 RUN chmod 0755 /usr/local/bin/su-exec
 
-FROM ubuntu:focal-20240918
+FROM ubuntu:focal-20241011
 LABEL maintainer="Daisuke Sato <tiryoh@gmail.com>"
 
 COPY --from=builder /usr/local/bin/su-exec /sbin/

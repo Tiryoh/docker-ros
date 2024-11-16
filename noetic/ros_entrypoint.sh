@@ -6,6 +6,7 @@ DEFAULT_USER_UID=${USER_UID:-'1000'}
 DEFAULT_USER_GID=${USER_GID:-'1000'}
 NOPASSWD=${NOPASSWD:-''} # set 'NOPASSWD:' to disable asking sudo password
 BUILD_TOOL=${BUILD_TOOL:-'catkin-tools'}
+SHELL=${DEFAULT_SHELL:-$SHELL}
 
 # override if $USER env exists
 if [[ ! -z "$USER" ]]; then
@@ -65,6 +66,9 @@ else # use existing user
 	DEFAULT_USER="$(whoami)"
 	DEFAULT_USER_UID="$(id -u)"
 	DEFAULT_USER_GID="$(id -g)"
+	if [[ ! -e /home/${DEFAULT_USER}/.bashrc ]]; then
+		cp /etc/skel/.* /home/$DEFAULT_USER/
+	fi
 fi
 
 echo "Launched container with user: ${DEFAULT_USER}, uid: ${DEFAULT_USER_UID}, gid: ${DEFAULT_USER_GID}"

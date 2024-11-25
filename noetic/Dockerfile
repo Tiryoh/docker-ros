@@ -27,6 +27,16 @@ RUN apt-get update -q && \
     apt-get install -y --no-install-recommends ros-noetic-teleop-twist-keyboard &&\
     rm -rf /var/lib/apt/lists/*
 RUN rosdep init && rosdep update --include-eol-distros
+# install the latest intel media driver to use GPU
+# Avoid libGL error: failed to create dri screen
+# https://bugs.launchpad.net/ubuntu/+source/intel-media-driver/+bug/2004237
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository ppa:kisak/kisak-mesa && \
+    apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y libegl-mesa0 && \
+    rm -rf /var/lib/apt/lists/*
 RUN echo -e "\n\
 echo 'Sourcing ROS 1 packages...'\n\
 source /opt/ros/\${ROS_DISTRO}/setup.bash\n\
